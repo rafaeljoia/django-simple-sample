@@ -9,7 +9,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copie o código atual para o contêiner
-COPY . .
+COPY django_simple_sample .
 
 # Exponha a porta 8000
 EXPOSE 8000
