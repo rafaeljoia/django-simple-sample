@@ -28,5 +28,5 @@ RUN set -ex && \
 
 COPY . /code
 #Add the following lines to make the release.sh script executable to run your script
-RUN chmod +x /code/release.sh
+RUN chmod +x /code/release-up-django.sh
 CMD ["/code/release.sh"]
