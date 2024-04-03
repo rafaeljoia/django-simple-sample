@@ -9,17 +9,24 @@
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Dados Fictícios</h1>
+        <h1 class="text-center">Usuarios</h1>
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
+
+                {% for user in user_list %}
+
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Informações do Usuário</h5>
-                        <p class="card-text">Nome: John J</p>
-                        <p class="card-text">Email: john@example.com</p>
-                        <p class="card-text">Telefone: +1234567890</p>
+                        <p class="card-text">Nome: {{ user.nome }}</p>
+                        <p class="card-text">Email: {{ user.email }}</p>
+                        <p class="card-text">Idade: {{ user.idade }}</p>
                     </div>
                 </div>
+                <br>
+                {% endfor %}
+
+
             </div>
         </div>
     </div>

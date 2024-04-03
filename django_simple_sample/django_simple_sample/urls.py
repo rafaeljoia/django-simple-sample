@@ -21,8 +21,6 @@ from first_app.views import home_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home_view, name='welcome'),
+    path('home/', home_view, name='welcome'),
     path('api/usuarios/', UsuarioList.as_view(), name='usuario-list'),
-
-
 ]

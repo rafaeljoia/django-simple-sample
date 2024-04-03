@@ -1,7 +1,5 @@
-# Use uma imagem base do Python
 FROM python:3.9
 
-# Defina o diretório de trabalho como /app
 WORKDIR /app
 
 # Copie os requisitos do projeto e instale-os
