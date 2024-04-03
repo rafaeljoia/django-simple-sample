@@ -1,31 +1,32 @@
-# Use uma imagem base do Python
-FROM python:3.9-slim
+ARG PYTHON_VERSION=3.9-slim
 
-# Defina variáveis de ambiente
+ARG DEBIAN_FRONTEND=noninteractive
+
+FROM python:${PYTHON_VERSION}
+
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Instale as dependências do sistema
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        gcc \
-        gettext && \
-    rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /code
 
-# Defina o diretório de trabalho
-WORKDIR /app
+WORKDIR /code
 
-# Copie o arquivo requirements.txt
-COPY requirements.txt .
+#install the linux packages, since these are the dependencies of some python packages
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    gcc \
+    cron \
+    wkhtmltopdf \
+    && rm -rf /var/lib/apt/lists/* !
 
-# Instale as dependências usando pip
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt /tmp/requirements.txt
 
-# Copie o restante dos arquivos do projeto
-COPY . .
+RUN set -ex && \
+    pip install --upgrade pip && \
+    pip install -r /tmp/requirements.txt && \
+    rm -rf /root/.cache/
 
-# Exponha a porta 8000
-EXPOSE 8000
-
-# Defina o comando padrão a ser executado quando o contêiner for iniciado
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "django_simple_sample.wsgi:application"]
+COPY . /code
+#Add the following lines to make the release.sh script executable to run your script
+RUN chmod +x /code/release.sh
+CMD ["/code/release.sh"]
