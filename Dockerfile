@@ -1,10 +1,6 @@
 # Use uma imagem base do Python
 FROM python:3.9-slim
 
-# Instale o Poetry
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-ENV PATH="$PATH:/root/.poetry/bin"
-
 # Defina variáveis de ambiente
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -19,11 +15,11 @@ RUN apt-get update && \
 # Defina o diretório de trabalho
 WORKDIR /app
 
-# Copie o arquivo pyproject.toml e o arquivo poetry.lock
-COPY pyproject.toml poetry.lock ./
+# Copie o arquivo requirements.txt
+COPY requirements.txt .
 
-# Instale as dependências usando Poetry
-RUN poetry install --no-root
+# Instale as dependências usando pip
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copie o restante dos arquivos do projeto
 COPY . .
