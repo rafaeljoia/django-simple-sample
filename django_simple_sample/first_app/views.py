@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-def welcome_view(request):
+def home_view(request):
     return render(request, 'welcome.html', {'message': 'Bem vindo!'})

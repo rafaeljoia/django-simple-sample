@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from first_app.views import welcome_view
+from first_app.api import UsuarioList
+from first_app.views import home_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', welcome_view, name='welcome'),
+    path('', home_view, name='welcome'),
+    path('api/usuarios/', UsuarioList.as_view(), name='usuario-list'),
+
 
 ]
